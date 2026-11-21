@@ -30,23 +30,11 @@ jobs:
               "import net.minecraft.world.item.ItemStack;",
               "import net.minecraft.world.item.ItemStack;\nimport net.minecraft.world.item.component.SwingAnimation;"
           )
-          s = s.replace(
-              "player.swing(InteractionHand.MAIN_HAND);",
-              "player.swing(InteractionHand.MAIN_HAND, SwingAnimation.DEFAULT, false);"
-          )
-          s = s.replace(
-              "private final List<GuiEventListener> rebuildable = new ArrayList<GuiEventListener>();",
-              "private final List<AbstractWidget> rebuildable = new ArrayList<AbstractWidget>();"
-          )
+          s = s.replace("player.swing(InteractionHand.MAIN_HAND);", "player.swing(InteractionHand.MAIN_HAND, SwingAnimation.DEFAULT, false);")
+          s = s.replace("private final List<GuiEventListener> rebuildable = new ArrayList<GuiEventListener>();", "private final List<AbstractWidget> rebuildable = new ArrayList<AbstractWidget>();")
           s = s.replace("this.addRenderableWidget((GuiEventListener)Button.builder", "this.addRenderableWidget(Button.builder")
-          s = s.replace(
-              "for (GuiEventListener guiEventListener : this.rebuildable) {\n            this.removeWidget(guiEventListener);",
-              "for (AbstractWidget widget : this.rebuildable) {\n            this.removeWidget(widget);"
-          )
-          s = s.replace(
-              "private <T extends GuiEventListener & Renderable> T addTabWidget(T t) {",
-              "private <T extends AbstractWidget> T addTabWidget(T t) {"
-          )
+          s = s.replace("for (GuiEventListener guiEventListener : this.rebuildable) {\n            this.removeWidget(guiEventListener);", "for (AbstractWidget widget : this.rebuildable) {\n            this.removeWidget(widget);")
+          s = s.replace("private <T extends GuiEventListener & Renderable> T addTabWidget(T t) {", "private <T extends AbstractWidget> T addTabWidget(T t) {")
           p.write_text(s)
           PY
       - run: gradle build
