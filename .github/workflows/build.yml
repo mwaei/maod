@@ -16,6 +16,39 @@ jobs:
         run: |
           mkdir -p src/main/java/com/example/baritoneui/client
           base64 -d source/BaritoneUIClient.java.gz.b64 | gzip -d > src/main/java/com/example/baritoneui/client/BaritoneUIClient.java
+      - name: Patch Minecraft 26.3 API changes
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path("src/main/java/com/example/baritoneui/client/BaritoneUIClient.java")
+          s = p.read_text()
+          s = s.replace(
+              "import net.minecraft.client.gui.components.Button;",
+              "import net.minecraft.client.gui.components.AbstractWidget;\\nimport net.minecraft.client.gui.components.Button;"
+          )
+          s = s.replace(
+              "import net.minecraft.world.item.ItemStack;",
+              "import net.minecraft.world.item.ItemStack;\\nimport net.minecraft.world.item.component.SwingAnimation;"
+          )
+          s = s.replace(
+              "player.swing(InteractionHand.MAIN_HAND);",
+              "player.swing(InteractionHand.MAIN_HAND, SwingAnimation.DEFAULT, false);"
+          )
+          s = s.replace(
+              "private final List<GuiEventListener> rebuildable = new ArrayList<GuiEventListener>();",
+              "private final List<AbstractWidget> rebuildable = new ArrayList<AbstractWidget>();"
+          )
+          s = s.replace("this.addRenderableWidget((GuiEventListener)Button.builder", "this.addRenderableWidget(Button.builder")
+          s = s.replace(
+              "for (GuiEventListener guiEventListener : this.rebuildable) {\\n            this.removeWidget(guiEventListener);",
+              "for (AbstractWidget widget : this.rebuildable) {\\n            this.removeWidget(widget);"
+          )
+          s = s.replace(
+              "private <T extends GuiEventListener & Renderable> T addTabWidget(T t) {",
+              "private <T extends AbstractWidget> T addTabWidget(T t) {"
+          )
+          p.write_text(s)
+          PY
       - run: gradle build
       - uses: actions/upload-artifact@v4
         with:
