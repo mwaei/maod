@@ -24,11 +24,11 @@ jobs:
           s = p.read_text()
           s = s.replace(
               "import net.minecraft.client.gui.components.Button;",
-              "import net.minecraft.client.gui.components.AbstractWidget;\\nimport net.minecraft.client.gui.components.Button;"
+              "import net.minecraft.client.gui.components.AbstractWidget;\nimport net.minecraft.client.gui.components.Button;"
           )
           s = s.replace(
               "import net.minecraft.world.item.ItemStack;",
-              "import net.minecraft.world.item.ItemStack;\\nimport net.minecraft.world.item.component.SwingAnimation;"
+              "import net.minecraft.world.item.ItemStack;\nimport net.minecraft.world.item.component.SwingAnimation;"
           )
           s = s.replace(
               "player.swing(InteractionHand.MAIN_HAND);",
@@ -40,8 +40,8 @@ jobs:
           )
           s = s.replace("this.addRenderableWidget((GuiEventListener)Button.builder", "this.addRenderableWidget(Button.builder")
           s = s.replace(
-              "for (GuiEventListener guiEventListener : this.rebuildable) {\\n            this.removeWidget(guiEventListener);",
-              "for (AbstractWidget widget : this.rebuildable) {\\n            this.removeWidget(widget);"
+              "for (GuiEventListener guiEventListener : this.rebuildable) {\n            this.removeWidget(guiEventListener);",
+              "for (AbstractWidget widget : this.rebuildable) {\n            this.removeWidget(widget);"
           )
           s = s.replace(
               "private <T extends GuiEventListener & Renderable> T addTabWidget(T t) {",
