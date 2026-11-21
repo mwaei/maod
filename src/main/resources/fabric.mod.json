@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "baritoneui",
+  "version": "1.1.0",
+  "name": "Baritone Bot UI",
+  "description": "Панель управления Baritone: автоубийство животных и автосклад с фильтром предметов.",
+  "authors": [],
+  "license": "LGPL-3.0-only",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.example.baritoneui.client.BaritoneUIClient"]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~26.3",
+    "fabric-api": "*"
+  }
+}
